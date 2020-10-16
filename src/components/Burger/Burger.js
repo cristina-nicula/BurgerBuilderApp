@@ -9,7 +9,11 @@ const Burger = (props) => {
       return [...Array(props.ingredients[ingredientKey])].map((_, i) => {
         console.log(ingredientKey + i);
         return (
-          <BurgerIngredient key={ingredientKey + i} type={ingredientKey} />
+          <BurgerIngredient
+            activated={props.activateIngredient}
+            key={ingredientKey + i}
+            type={ingredientKey}
+          />
         );
       });
     })
