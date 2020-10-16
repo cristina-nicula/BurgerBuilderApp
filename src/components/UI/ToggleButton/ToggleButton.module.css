@@ -8,12 +8,48 @@
   padding: 10px 0;
   box-sizing: border-box;
   cursor: pointer;
+  transition: all 0.5s ease-in-out;
 }
 
-.ToggleButton div {
-  width: 90%;
-  height: 3px;
-  background-color: white;
+.Line {
+  width: 50px;
+  height: 4px;
+  background-color: black;
+  border-radius: 5px;
+  transition: all 0.5s ease-in-out;
+}
+
+.Line::before,
+.Line::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 4px;
+  background: black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(255, 101, 47, 0.2);
+  transition: all 0.5s ease-in-out;
+}
+
+.Line::before {
+  transform: translateY(-16px);
+}
+.Line::after {
+  transform: translateY(16px);
+}
+
+.Open .Line {
+  transform: translateX(-50px);
+  background: transparent;
+  box-shadow: none;
+}
+
+.Open .Line::before {
+  transform: rotate(45deg) translate(35px, -35px);
+}
+
+.Open .Line::after {
+  transform: rotate(-45deg) translate(35px, 35px);
 }
 
 @media (min-width: 500px) {
