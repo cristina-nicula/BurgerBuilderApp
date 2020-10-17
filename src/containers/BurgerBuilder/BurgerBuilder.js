@@ -15,12 +15,6 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-  // constructor(props) {
-  //     super(props);
-  //     state = {
-  //
-  //     }
-  // }
   state = {
     ingredients: {
       salad: 0,
@@ -31,12 +25,19 @@ class BurgerBuilder extends Component {
     totalPrice: 4,
     purchasable: false,
     purchaseMode: false,
+    ingredientActive: null,
+  };
+
+  updateStateIngredient = (event) => {
+    this.setState({
+      ingredientActive: event.currentTarget.dataset.div_id,
+    });
   };
 
   updatePurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients)
-      .map((ingredientKey) => {
-        return ingredients[ingredientKey];
+      .map((ingredientType) => {
+        return ingredients[ingredientType];
       })
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
@@ -61,8 +62,10 @@ class BurgerBuilder extends Component {
     });
     this.updatePurchaseState(updatedIngredients);
   };
+
   deleteIngredientHandler = (type) => {
     const oldCount = this.state.ingredients[type];
+
     if (oldCount <= 0) {
       return;
     }
@@ -102,6 +105,7 @@ class BurgerBuilder extends Component {
     for (let key in this.state.ingredients) {
       disabledInfo[key] = this.state.ingredients[key] <= 0;
     }
+
     return (
       <Aux>
         <Modal
@@ -115,7 +119,11 @@ class BurgerBuilder extends Component {
             continuePurchase={this.purchaseContinueHandler}
           />
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
+        <Burger
+          activateIngredient={this.updateStateIngredient}
+          activeIngredient={this.state.ingredientActive}
+          ingredients={this.state.ingredients}
+        />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientDeleted={this.deleteIngredientHandler}

@@ -5,14 +5,16 @@ import PropTypes from "prop-types";
 
 const Burger = (props) => {
   let transformedIngredients = Object.keys(props.ingredients)
-    .map((ingredientKey) => {
-      return [...Array(props.ingredients[ingredientKey])].map((_, i) => {
-        console.log(ingredientKey + i);
+    .map((ingredientType) => {
+      return [...Array(props.ingredients[ingredientType])].map((_, i) => {
+        console.log(ingredientType + i);
+        console.log(Object.keys(props.ingredients));
         return (
           <BurgerIngredient
-            activated={props.activateIngredient}
-            key={ingredientKey + i}
-            type={ingredientKey}
+            activate={props.activateIngredient}
+            active={props.activeIngredient}
+            key={ingredientType + i}
+            type={ingredientType}
           />
         );
       });

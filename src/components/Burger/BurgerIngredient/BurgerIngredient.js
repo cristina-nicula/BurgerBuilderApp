@@ -8,37 +8,75 @@ class BurgerIngredient extends Component {
 
     switch (this.props.type) {
       case "bread-bottom":
-        ingredient = <div className={classes.BreadBottom}></div>;
+        ingredient = <div className={classes.BreadBottom} />;
         break;
       case "bread-top":
         ingredient = (
           <div className={classes.BreadTop}>
-            <div className={classes.Seeds1}></div>
-            <div className={classes.Seeds2}></div>
+            <div className={classes.Seeds1} />
+            <div className={classes.Seeds2} />
           </div>
         );
         break;
       case "meat":
-        ingredient = <div className={classes.Meat}></div>;
+        ingredient = (
+          <div
+            data-div_id={"meat"}
+            onClick={this.props.activate}
+            className={[
+              classes.Meat,
+              this.props.type === this.props.active ? classes.Active : null,
+            ].join(" ")}
+          />
+        );
         break;
       case "salad":
-        ingredient = <div className={classes.Salad}></div>;
+        ingredient = (
+          <div
+            data-div_id={"salad"}
+            onClick={this.props.activate}
+            className={[
+              classes.Salad,
+              this.props.type === this.props.active ? classes.Active : null,
+            ].join(" ")}
+          />
+        );
         break;
       case "bacon":
-        ingredient = <div className={classes.Bacon}></div>;
+        ingredient = (
+          <div
+            data-div_id={"bacon"}
+            onClick={this.props.activate}
+            className={[
+              classes.Bacon,
+              this.props.type === this.props.active ? classes.Active : null,
+            ].join(" ")}
+          />
+        );
         break;
       case "cheese":
-        ingredient = <div className={classes.Cheese}></div>;
+        ingredient = (
+          <div
+            data-div_id={"cheese"}
+            onClick={this.props.activate}
+            className={[
+              classes.Cheese,
+              this.props.type === this.props.active ? classes.Active : null,
+            ].join(" ")}
+          />
+        );
         break;
       default:
         ingredient = null;
     }
+    console.log(classes.Cheese);
     return ingredient;
   }
 }
 
 BurgerIngredient.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  active: PropTypes.string,
 };
 
 export default BurgerIngredient;
