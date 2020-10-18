@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Burger.module.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
+import IngredientInformation from "./IngredientInformation/IngredientInformation";
 import PropTypes from "prop-types";
 
 const Burger = (props) => {
@@ -27,10 +28,13 @@ const Burger = (props) => {
     transformedIngredients = <p>Please start adding ingredients!</p>;
   }
   return (
-    <div className={classes.Burger}>
-      <BurgerIngredient type={"bread-top"} />
-      {transformedIngredients}
-      <BurgerIngredient type={"bread-bottom"} />
+    <div className={classes.BurgerWrapper}>
+      <div className={classes.Burger}>
+        <BurgerIngredient type={"bread-top"} />
+        {transformedIngredients}
+        <BurgerIngredient type={"bread-bottom"} />
+      </div>
+      <IngredientInformation />
     </div>
   );
 };

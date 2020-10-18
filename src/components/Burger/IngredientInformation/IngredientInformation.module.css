@@ -1,0 +1,45 @@
+.IngredientWrapper {
+  margin: 20px;
+}
+
+.IngredientInformation {
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 20px;
+  width: 60%;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  height: auto;
+  font-family: inherit;
+}
+
+.IngredientInformation::after {
+  content: " ";
+  position: absolute;
+  right: 30px;
+  top: -15px;
+  border-top: none;
+  border-right: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-bottom: 15px solid black;
+}
+
+@media (min-width: 1000px) and (min-height: 700px) {
+  .IngredientInformation::after {
+    content: " ";
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: none;
+    border-left: 15px solid black;
+    border-bottom: 15px solid transparent;
+  }
+}
+
+.IngredientInformation p {
+  margin: 10px;
+  padding: 4px;
+}

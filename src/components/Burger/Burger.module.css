@@ -27,4 +27,8 @@
     width: 700px;
     height: 440px;
   }
+  .BurgerWrapper {
+    display: flex;
+    flex-direction: row-reverse;
+  }
 }
