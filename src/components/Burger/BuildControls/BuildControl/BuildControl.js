@@ -13,7 +13,11 @@ const BuildControl = (props) => {
       >
         Less
       </button>
-      <button className={classes.More} onClick={props.addIngredient}>
+      <button
+        className={classes.More}
+        onClick={props.addIngredient}
+        // onClick={props.updateExtraCharge}
+      >
         More
       </button>
     </div>

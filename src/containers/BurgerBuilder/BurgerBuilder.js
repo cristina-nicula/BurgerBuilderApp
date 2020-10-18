@@ -22,6 +22,8 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0,
     },
+    unitPrice: 0,
+    totalExtraCharge: 0,
     totalPrice: 4,
     purchasable: false,
     purchaseMode: false,
@@ -56,9 +58,13 @@ class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount;
     const additionPrice = INGREDIENT_PRICES[type];
     const newPrice = this.state.totalPrice + additionPrice;
+    const newExtraCharge = additionPrice * updatedCount;
+
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: newPrice,
+      unitPrice: additionPrice,
+      totalExtraCharge: newExtraCharge,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -77,9 +83,12 @@ class BurgerBuilder extends Component {
     const initialPrice = this.state.totalPrice;
     const deductionPrice = INGREDIENT_PRICES[type];
     const newPrice = initialPrice - deductionPrice;
+    const newExtraCharge = deductionPrice * updatedCount;
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: newPrice,
+      unitPrice: deductionPrice,
+      totalExtraCharge: newExtraCharge,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -124,9 +133,12 @@ class BurgerBuilder extends Component {
           activateIngredient={this.updateStateIngredient}
           activeIngredient={this.state.ingredientActive}
           ingredients={this.state.ingredients}
+          extraCharge={this.state.totalExtraCharge}
+          unitPrice={this.state.unitPrice}
         />
 
         <BuildControls
+          updatedExtraCharge={this.updateExtraCharge}
           ingredientAdded={this.addIngredientHandler}
           ingredientDeleted={this.deleteIngredientHandler}
           disabled={disabledInfo}
