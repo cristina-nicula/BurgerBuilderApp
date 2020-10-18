@@ -8,14 +8,15 @@ const Burger = (props) => {
   let transformedIngredients = Object.keys(props.ingredients)
     .map((ingredientType) => {
       return [...Array(props.ingredients[ingredientType])].map((_, i) => {
-        console.log(ingredientType + i);
-        console.log(Object.keys(props.ingredients));
         return (
           <BurgerIngredient
-            activate={props.activateIngredient}
-            active={props.activeIngredient}
+            activateIngredient={props.activateIngredient}
+            activeIngredient={props.activeIngredient}
             key={ingredientType + i}
             type={ingredientType}
+            totalExtraCharge={props.extraCharge}
+            unitPrice={props.unitPrice}
+            ingredientQuantity={props.ingredientQuantity}
           />
         );
       });
@@ -27,23 +28,43 @@ const Burger = (props) => {
   if (transformedIngredients.length === 0) {
     transformedIngredients = <p>Please start adding ingredients!</p>;
   }
+
+  let ingredientInformation = () => {
+    if (props.active === props.type) {
+      return (
+        <IngredientInformation
+          activate={props.activateIngredient}
+          ingredientActive={props.activeIngredient}
+          totalExtraCharge={props.extraCharge}
+          unitPrice={props.unitPrice}
+          ingredientQuantity={props.ingredientQuantity}
+        />
+      );
+    }
+  };
+
   return (
     <div className={classes.BurgerWrapper}>
       <div className={classes.Burger}>
-        <BurgerIngredient type={"bread-top"} />
+        <BurgerIngredient
+          type={"bread-top"}
+          activeIngredient={props.activeIngredient}
+        />
         {transformedIngredients}
-        <BurgerIngredient type={"bread-bottom"} />
+
+        <BurgerIngredient
+          type={"bread-bottom"}
+          activeIngredient={props.activeIngredient}
+        />
       </div>
-      <IngredientInformation
-        totalExtraCharge={props.extraCharge}
-        unit={props.unitPrice}
-      />
+      {ingredientInformation()}
     </div>
   );
 };
 
 Burger.propTypes = {
-  ingredients: PropTypes.object,
+  ingredients: PropTypes.object.isRequired,
+  activeIngredient: PropTypes.string.isRequired,
 };
 
 export default Burger;

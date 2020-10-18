@@ -5,9 +5,7 @@ import PropTypes from "prop-types";
 import classes from "./OrderSummary.module.css";
 
 class OrderSummary extends Component {
-  componentDidUpdate() {
-    console.log("[OrderSummay] rendered");
-  }
+  componentDidUpdate() {}
 
   render() {
     const ingredientSummary = Object.keys(this.props.ingredients).map(

@@ -18,8 +18,8 @@ class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
-      bacon: 0,
-      cheese: 0,
+      bacon: 2,
+      cheese: 2,
       meat: 0,
     },
     unitPrice: 0,
@@ -27,12 +27,21 @@ class BurgerBuilder extends Component {
     totalPrice: 4,
     purchasable: false,
     purchaseMode: false,
-    ingredientActive: null,
+    ingredientActive: "",
+    ingredientQuantity: 0,
   };
 
-  updateStateIngredient = (event) => {
+  updateActiveIngredient = (event) => {
+    const updatedCount = this.state.ingredients[
+      event.currentTarget.dataset.div_id
+    ];
+    const additionPrice = INGREDIENT_PRICES[event.currentTarget.dataset.div_id];
+    const newExtraCharge = additionPrice * updatedCount;
     this.setState({
       ingredientActive: event.currentTarget.dataset.div_id,
+      unitPrice: additionPrice,
+      totalExtraCharge: newExtraCharge,
+      ingredientQuantity: updatedCount,
     });
   };
 
@@ -65,6 +74,8 @@ class BurgerBuilder extends Component {
       totalPrice: newPrice,
       unitPrice: additionPrice,
       totalExtraCharge: newExtraCharge,
+      ingredientQuantity: updatedCount,
+      ingredientActive: type,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -89,6 +100,8 @@ class BurgerBuilder extends Component {
       totalPrice: newPrice,
       unitPrice: deductionPrice,
       totalExtraCharge: newExtraCharge,
+      ingredientQuantity: updatedCount,
+      ingredientActive: type,
     });
     this.updatePurchaseState(updatedIngredients);
   };
@@ -130,15 +143,15 @@ class BurgerBuilder extends Component {
         </Modal>
 
         <Burger
-          activateIngredient={this.updateStateIngredient}
+          activateIngredient={this.updateActiveIngredient}
           activeIngredient={this.state.ingredientActive}
           ingredients={this.state.ingredients}
           extraCharge={this.state.totalExtraCharge}
           unitPrice={this.state.unitPrice}
+          ingredientQuantity={this.state.ingredientQuantity}
         />
 
         <BuildControls
-          updatedExtraCharge={this.updateExtraCharge}
           ingredientAdded={this.addIngredientHandler}
           ingredientDeleted={this.deleteIngredientHandler}
           disabled={disabledInfo}

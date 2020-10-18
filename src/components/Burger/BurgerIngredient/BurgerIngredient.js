@@ -22,22 +22,27 @@ class BurgerIngredient extends Component {
         ingredient = (
           <div
             data-div_id={"meat"}
-            onClick={this.props.activate}
+            onClick={this.props.activateIngredient}
             className={[
               classes.Meat,
-              this.props.type === this.props.active ? classes.Active : null,
+              this.props.type === this.props.activeIngredient
+                ? classes.Active
+                : null,
             ].join(" ")}
           />
         );
+
         break;
       case "salad":
         ingredient = (
           <div
             data-div_id={"salad"}
-            onClick={this.props.activate}
+            onClick={this.props.activateIngredient}
             className={[
               classes.Salad,
-              this.props.type === this.props.active ? classes.Active : null,
+              this.props.type === this.props.activeIngredient
+                ? classes.Active
+                : null,
             ].join(" ")}
           />
         );
@@ -46,10 +51,12 @@ class BurgerIngredient extends Component {
         ingredient = (
           <div
             data-div_id={"bacon"}
-            onClick={this.props.activate}
+            onClick={this.props.activateIngredient}
             className={[
               classes.Bacon,
-              this.props.type === this.props.active ? classes.Active : null,
+              this.props.type === this.props.activeIngredient
+                ? classes.Active
+                : null,
             ].join(" ")}
           />
         );
@@ -58,10 +65,12 @@ class BurgerIngredient extends Component {
         ingredient = (
           <div
             data-div_id={"cheese"}
-            onClick={this.props.activate}
+            onClick={this.props.activateIngredient}
             className={[
               classes.Cheese,
-              this.props.type === this.props.active ? classes.Active : null,
+              this.props.type === this.props.activeIngredient
+                ? classes.Active
+                : null,
             ].join(" ")}
           />
         );
@@ -69,14 +78,13 @@ class BurgerIngredient extends Component {
       default:
         ingredient = null;
     }
-    console.log(classes.Cheese);
     return ingredient;
   }
 }
 
 BurgerIngredient.propTypes = {
-  type: PropTypes.string,
-  active: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  activeIngredient: PropTypes.string.isRequired,
 };
 
 export default BurgerIngredient;

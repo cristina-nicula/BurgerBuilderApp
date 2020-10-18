@@ -1,5 +1,6 @@
 .IngredientWrapper {
   margin: 20px;
+  display: none;
 }
 
 .IngredientInformation {
@@ -24,6 +25,10 @@
   border-right: 15px solid transparent;
   border-left: 15px solid transparent;
   border-bottom: 15px solid black;
+}
+
+.Show {
+  display: block;
 }
 
 @media (min-width: 1000px) and (min-height: 700px) {
