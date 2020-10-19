@@ -125,7 +125,9 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    alert("Sorry, but this is just a demo app. Please make your own burger.");
+    alert(
+      "Sorry, but this is just a demo app. Please make your own burger!statu"
+    );
   };
 
   render() {
