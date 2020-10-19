@@ -25,10 +25,10 @@ const BuildControl = (props) => {
 };
 
 BuildControl.propTypes = {
-  ingredientLabel: PropTypes.string,
-  deleteIngredient: PropTypes.func,
-  disabled: PropTypes.bool,
-  addIngredient: PropTypes.func,
+  ingredientLabel: PropTypes.string.isRequired,
+  deleteIngredient: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  addIngredient: PropTypes.func.isRequired,
 };
 
 export default BuildControl;

@@ -4,7 +4,7 @@ import classes from "./BurgerIngredient.module.css";
 
 class BurgerIngredient extends Component {
   render() {
-    let ingredient = null;
+    let ingredient = "";
 
     switch (this.props.type) {
       case "bread-bottom":
@@ -85,6 +85,7 @@ class BurgerIngredient extends Component {
 BurgerIngredient.propTypes = {
   type: PropTypes.string.isRequired,
   activeIngredient: PropTypes.string.isRequired,
+  activateIngredient: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient;

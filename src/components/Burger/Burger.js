@@ -14,9 +14,6 @@ const Burger = (props) => {
             activeIngredient={props.activeIngredient}
             key={ingredientType + i}
             type={ingredientType}
-            totalExtraCharge={props.extraCharge}
-            unitPrice={props.unitPrice}
-            ingredientQuantity={props.ingredientQuantity}
           />
         );
       });
@@ -28,20 +25,6 @@ const Burger = (props) => {
   if (transformedIngredients.length === 0) {
     transformedIngredients = <p>Please start adding ingredients!</p>;
   }
-
-  let ingredientInformation = () => {
-    if (props.active === props.type) {
-      return (
-        <IngredientInformation
-          activate={props.activateIngredient}
-          ingredientActive={props.activeIngredient}
-          totalExtraCharge={props.extraCharge}
-          unitPrice={props.unitPrice}
-          ingredientQuantity={props.ingredientQuantity}
-        />
-      );
-    }
-  };
 
   return (
     <div className={classes.BurgerWrapper}>
@@ -57,14 +40,24 @@ const Burger = (props) => {
           activeIngredient={props.activeIngredient}
         />
       </div>
-      {ingredientInformation()}
+      <IngredientInformation
+        activate={props.activateIngredient}
+        ingredientActive={props.activeIngredient}
+        totalExtraCharge={props.extraCharge}
+        unitPrice={props.unitPrice}
+        ingredientQuantity={props.ingredientQuantity}
+      />
     </div>
   );
 };
 
 Burger.propTypes = {
   ingredients: PropTypes.object.isRequired,
+  activateIngredient: PropTypes.func.isRequired,
   activeIngredient: PropTypes.string.isRequired,
+  extraCharge: PropTypes.number.isRequired,
+  unitPrice: PropTypes.number.isRequired,
+  ingredientQuantity: PropTypes.number.isRequired,
 };
 
 export default Burger;

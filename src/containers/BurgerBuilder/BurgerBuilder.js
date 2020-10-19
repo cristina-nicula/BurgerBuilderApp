@@ -18,8 +18,8 @@ class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
-      bacon: 2,
-      cheese: 2,
+      bacon: 0,
+      cheese: 0,
       meat: 0,
     },
     unitPrice: 0,
@@ -32,6 +32,12 @@ class BurgerBuilder extends Component {
   };
 
   updateActiveIngredient = (event) => {
+    if (event.currentTarget.dataset.div_id === this.state.ingredientActive) {
+      this.setState({
+        ingredientActive: "",
+      });
+      return;
+    }
     const updatedCount = this.state.ingredients[
       event.currentTarget.dataset.div_id
     ];
@@ -119,7 +125,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    alert("You continue!");
+    alert("Sorry, but this is just a demo app. Please make your own burger.");
   };
 
   render() {

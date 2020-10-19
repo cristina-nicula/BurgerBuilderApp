@@ -12,8 +12,8 @@ const Button = (props) => (
 );
 
 Button.propTypes = {
-  clicked: PropTypes.func,
-  btnType: PropTypes.string,
+  clicked: PropTypes.func.isRequired,
+  btnType: PropTypes.string.isRequired,
 };
 
 export default Button;

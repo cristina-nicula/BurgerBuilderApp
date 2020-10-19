@@ -8,17 +8,14 @@ const ToggleButton = (props) => {
     classToAdd = [classes.ToggleButton, classes.Open];
   }
   return (
-    <div
-      open={props.openSidedrawer}
-      className={classToAdd.join(" ")}
-      onClick={props.clicked}
-    >
-      <div className={classes.Line}></div>
+    <div className={classToAdd.join(" ")} onClick={props.clicked}>
+      <div className={classes.Line} />
     </div>
   );
 };
 
 ToggleButton.propTypes = {
-  clicked: PropTypes.func,
+  clicked: PropTypes.func.isRequired,
+  openSidedrawer: PropTypes.bool,
 };
 export default ToggleButton;
