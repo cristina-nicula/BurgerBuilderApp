@@ -4,15 +4,19 @@ import Aux from "../Aux/Aux";
 
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
-    state = {
-      error: null,
-    };
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+      };
+    }
+
     componentDidMount() {
-      axios.interceptors.request.use((request) => {
-        this.setState({ error: null });
+      this.requestInterceptor = axios.interceptors.request.use((request) => {
+        this.setState({ error: false });
         return request;
       });
-      axios.interceptors.response.use(
+      this.responseInterceptor = axios.interceptors.response.use(
         (response) => response,
         (error) => {
           this.setState({ error: error });
@@ -20,9 +24,19 @@ const withErrorHandler = (WrappedComponent, axios) => {
       );
     }
 
+    componentWillUnmount() {
+      console.log(
+        "Will unmount",
+        this.requestInterceptor,
+        this.responseInterceptor
+      );
+      axios.interceptors.request.eject(this.requestInterceptor);
+      axios.interceptors.response.eject(this.responseInterceptor);
+    }
+
     errorConfirmerdHandler = () => {
       this.setState({
-        error: null,
+        error: false,
       });
     };
     render() {
@@ -32,7 +46,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             show={this.state.error}
             modalClosed={this.errorConfirmerdHandler}
           >
-            {this.state.error ? this.state.error.message : null}
+            {this.state.error ? this.state.error.message : false}
           </Modal>
           <WrappedComponent {...this.props} />
         </Aux>
