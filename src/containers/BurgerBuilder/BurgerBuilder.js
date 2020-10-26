@@ -9,6 +9,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import Checkout from "../Checkout/Checkout";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -140,34 +141,35 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({
-      loading: true,
-    });
-    const orders = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Cristina",
-        address: "testaddress",
-        phone: 4911441141415,
-        email: "test@test.com",
-      },
-      delivery: "fast",
-    };
-    axios
-      .post("/orders.json", orders)
-      .then((response) => {
-        this.setState({
-          loading: false,
-          purchaseMode: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          loading: false,
-          purchaseMode: false,
-        });
-      });
+    // this.setState({
+    //   loading: true,
+    // });
+    // const orders = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: "Cristina",
+    //     address: "testaddress",
+    //     phone: 4911441141415,
+    //     email: "test@test.com",
+    //   },
+    //   delivery: "fast",
+    // };
+    // axios
+    //   .post("/orders.json", orders)
+    //   .then((response) => {
+    //     this.setState({
+    //       loading: false,
+    //       purchaseMode: false,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     this.setState({
+    //       loading: false,
+    //       purchaseMode: false,
+    //     });
+    //   });
+    this.props.history.push("/checkout");
   };
 
   render() {
