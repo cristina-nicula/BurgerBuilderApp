@@ -7,8 +7,7 @@ const Order = (props) => {
       <p>Ingredients: Salad (1)</p>
       <p>
         {" "}
-        Price
-        <strong>7.55 Eur</strong>
+        Price <strong>7.55 Eur</strong>
       </p>
     </div>
   );
