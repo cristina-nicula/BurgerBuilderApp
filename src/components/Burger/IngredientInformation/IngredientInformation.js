@@ -15,7 +15,7 @@ const IngredientInformation = (props) => {
           Price for {props.ingredientActive} is {props.unitPrice} €/unit.
         </p>
         <p>
-          Your total extra charge for {props.ingredientQuantity} x{" "}
+          Your total extra charge for {props.ingredientQuantity} x
           {props.ingredientActive} is {props.totalExtraCharge.toFixed(2)} €
         </p>
       </div>
