@@ -9,7 +9,6 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import Checkout from "../Checkout/Checkout";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -169,7 +168,19 @@ class BurgerBuilder extends Component {
     //       purchaseMode: false,
     //     });
     //   });
-    this.props.history.push("/checkout");
+    const queryParams = [];
+    for (let ingredient in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(ingredient) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[ingredient])
+      );
+    }
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
   };
 
   render() {
