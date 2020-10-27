@@ -15,6 +15,11 @@ class ContactData extends Component {
           placeholder: "Your full name",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        modified: false,
       },
       street: {
         elementType: "input",
@@ -23,6 +28,11 @@ class ContactData extends Component {
           placeholder: "Street name and number",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        modified: false,
       },
       phone: {
         elementType: "input",
@@ -31,6 +41,13 @@ class ContactData extends Component {
           placeholder: "Your phone number",
         },
         value: "",
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 20,
+        },
+        valid: false,
+        modified: false,
       },
       email: {
         elementType: "input",
@@ -39,6 +56,11 @@ class ContactData extends Component {
           placeholder: "Your email",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        modified: false,
       },
       delivery: {
         elementType: "select",
@@ -48,10 +70,14 @@ class ContactData extends Component {
             { value: "standard", displayValue: "Standard delivery" },
           ],
         },
-        value: "",
+        value: "fast",
+        validation: {},
+        valid: true,
+        modified: false,
       },
     },
     loading: false,
+    formIsValid: false,
   };
 
   orderHandler = (event) => {
@@ -59,11 +85,17 @@ class ContactData extends Component {
     this.setState({
       loading: true,
     });
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    }
     const orders = {
       ingredients: this.props.ingredients,
       price: this.props.price,
+      orderData: formData,
     };
-    console.log(orders);
     axios
       .post("/orders.json", orders)
       .then((response) => {
@@ -79,12 +111,36 @@ class ContactData extends Component {
       });
   };
 
+  checkValidity(value, rules) {
+    let isValid = true;
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+    return isValid;
+  }
+
   changeFormHandler = (event, inputIdentifier) => {
     const orderFormCopy = { ...this.state.orderForm };
     const formElementCopy = { ...orderFormCopy[inputIdentifier] };
     formElementCopy.value = event.target.value;
+    formElementCopy.valid = this.checkValidity(
+      formElementCopy.value,
+      formElementCopy.validation
+    );
+    formElementCopy.modified = true;
     orderFormCopy[inputIdentifier] = formElementCopy;
-    this.setState({ orderForm: orderFormCopy });
+    let formIsValid = true;
+    for (let inputIdentifier in orderFormCopy) {
+      formIsValid = orderFormCopy[inputIdentifier].valid && formIsValid;
+    }
+    this.setState({ orderForm: orderFormCopy, formIsValid: formIsValid });
   };
 
   render() {
@@ -96,7 +152,7 @@ class ContactData extends Component {
       });
     }
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map((elementForm) => {
           return (
             <Input
@@ -107,10 +163,16 @@ class ContactData extends Component {
               elementType={elementForm.setup.elementType}
               elementConfig={elementForm.setup.elementConfig}
               value={elementForm.setup.value}
+              invalid={!elementForm.setup.valid}
+              modified={elementForm.setup.modified}
             />
           );
         })}
-        <Button clicked={this.orderHandler} btnType="Success">
+        <Button
+          clicked={() => {}}
+          disabled={!this.state.formIsValid}
+          btnType="Success"
+        >
           ORDER
         </Button>
       </form>
