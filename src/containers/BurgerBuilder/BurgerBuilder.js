@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../axios-orders";
+
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 import Aux from "../../hoc/Aux/Aux";
@@ -11,7 +12,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions";
+import * as actions from "../../store/actions/index";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -27,24 +28,11 @@ class BurgerBuilder extends Component {
     purchaseMode: false,
     ingredientActive: "",
     ingredientQuantity: 0,
-    loading: false,
-    error: false,
   };
 
-  // componentDidMount() {
-  //   axios
-  //     .get("https://burger-builder-app-12965.firebaseio.com/ingredients.json")
-  //     .then((response) => {
-  //       this.setState({
-  //         ingredients: response.data,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       this.setState({
-  //         error: true,
-  //       });
-  //     });
-  // }
+  componentDidMount() {
+    this.props.onInitIngredients();
+  }
 
   updateActiveIngredient = (event) => {
     if (event.currentTarget.dataset.div_id === this.state.ingredientActive) {
@@ -75,54 +63,6 @@ class BurgerBuilder extends Component {
     return sum > 0;
   };
 
-  // addIngredientHandler = (type) => {
-  //   const oldCount = this.props.ings[type];
-  //   const updatedCount = oldCount + 1;
-  //   const updatedIngredients = {
-  //     ...this.props.ings,
-  //   };
-  //   updatedIngredients[type] = updatedCount;
-  //   const additionPrice = INGREDIENT_PRICES[type];
-  //   const newPrice = this.props.price + additionPrice;
-  //   const newExtraCharge = additionPrice * updatedCount;
-  //
-  //   this.setState({
-  //     ingredients: updatedIngredients,
-  //     totalPrice: newPrice,
-  //     unitPrice: additionPrice,
-  //     totalExtraCharge: newExtraCharge,
-  //     ingredientQuantity: updatedCount,
-  //     ingredientActive: type,
-  //   });
-  //   this.updatePurchaseState(updatedIngredients);
-  // };
-  //
-  // deleteIngredientHandler = (type) => {
-  //   const oldCount = this.props.ings[type];
-  //
-  //   if (oldCount <= 0) {
-  //     return;
-  //   }
-  //   const updatedCount = oldCount - 1;
-  //   const updatedIngredients = {
-  //     ...this.props.ings,
-  //   };
-  //   updatedIngredients[type] = updatedCount;
-  //   const initialPrice = this.props.price;
-  //   const deductionPrice = INGREDIENT_PRICES[type];
-  //   const newPrice = initialPrice - deductionPrice;
-  //   const newExtraCharge = deductionPrice * updatedCount;
-  //   this.setState({
-  //     ingredients: updatedIngredients,
-  //     totalPrice: newPrice,
-  //     unitPrice: deductionPrice,
-  //     totalExtraCharge: newExtraCharge,
-  //     ingredientQuantity: updatedCount,
-  //     ingredientActive: type,
-  //   });
-  //   this.updatePurchaseState(updatedIngredients);
-  // };
-
   purchaseHandler = () => {
     this.setState({
       purchaseMode: true,
@@ -136,6 +76,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
+    this.props.onInitPurchase();
     this.props.history.push("/checkout");
   };
 
@@ -146,7 +87,7 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null;
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>Ingredients can't be loaded </p>
     ) : (
       <Spinner />
@@ -183,10 +124,6 @@ class BurgerBuilder extends Component {
       );
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-
     return (
       <Aux>
         <Modal
@@ -203,20 +140,19 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddIngredient: (ingName) =>
-      dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+    onAddIngredient: (ingName) => dispatch(actions.addIngredient(ingName)),
     onDeleteIngredient: (ingName) =>
-      dispatch({
-        type: actionTypes.DELETE_INGREDIENT,
-        ingredientName: ingName,
-      }),
+      dispatch(actions.deleteIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit()),
   };
 };
 
