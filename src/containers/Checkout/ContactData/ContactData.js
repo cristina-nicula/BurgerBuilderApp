@@ -133,7 +133,7 @@ class ContactData extends Component {
   };
 
   render() {
-    let formElementsArray = [];
+    const formElementsArray = [];
     for (let key in this.state.orderForm) {
       formElementsArray.push({
         id: key,
@@ -145,9 +145,7 @@ class ContactData extends Component {
         {formElementsArray.map((elementForm) => {
           return (
             <Input
-              changeForm={(event) =>
-                this.changeFormHandler(event, elementForm.id)
-              }
+              changed={(event) => this.changeFormHandler(event, elementForm.id)}
               key={elementForm.id}
               elementType={elementForm.setup.elementType}
               elementConfig={elementForm.setup.elementConfig}

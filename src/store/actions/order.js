@@ -63,7 +63,7 @@ export const fetchOrderStart = () => {
   };
 };
 
-export const fetchOrder = (orders) => {
+export const fetchOrder = () => {
   return (dispatch) => {
     dispatch(fetchOrderStart());
     axios

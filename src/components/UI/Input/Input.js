@@ -11,7 +11,7 @@ const Input = (props) => {
     case "input":
       inputElement = (
         <input
-          onChange={props.changeForm}
+          onChange={props.changed}
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
@@ -21,7 +21,7 @@ const Input = (props) => {
     case "textarea":
       inputElement = (
         <textarea
-          onChange={props.changeForm}
+          onChange={props.changed}
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
@@ -31,7 +31,7 @@ const Input = (props) => {
     case "select":
       inputElement = (
         <select
-          onChange={props.changeForm}
+          onChange={props.changed}
           className={inputClasses.join(" ")}
           value={props.value}
         >
@@ -46,7 +46,7 @@ const Input = (props) => {
     default:
       inputElement = (
         <input
-          onChange={props.changeForm}
+          onChange={props.changed}
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
