@@ -11,7 +11,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       };
     }
 
-    componentDidMount() {
+    componentWillMount() {
       this.requestInterceptor = axios.interceptors.request.use((request) => {
         this.setState({ error: false });
         return request;
