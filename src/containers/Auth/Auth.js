@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -104,19 +104,17 @@ class Auth extends Component {
       });
     }
 
-    let form = formElementsArray.map((formElement) => {
-      return (
-        <Input
-          changed={(event) => this.inputChangedHandler(event, formElement.id)}
-          key={formElement.id}
-          elementType={formElement.setup.elementType}
-          elementConfig={formElement.setup.elementConfig}
-          value={formElement.setup.value}
-          invalid={!formElement.setup.valid}
-          modified={formElement.setup.modified}
-        />
-      );
-    });
+    let form = formElementsArray.map((formElement) => (
+      <Input
+        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+        key={formElement.id}
+        elementType={formElement.setup.elementType}
+        elementConfig={formElement.setup.elementConfig}
+        value={formElement.setup.value}
+        invalid={!formElement.setup.valid}
+        modified={formElement.setup.modified}
+      />
+    ));
 
     if (this.props.loading) {
       form = <Spinner />;
@@ -142,10 +140,10 @@ class Auth extends Component {
           <Button clicked={() => {}} btnType="Success">
             SUBMIT
           </Button>
-          <Button clicked={this.switchAuthModeHandler} btnType="Danger">
-            SWITCH TO {this.state.isSignup ? "SIGNIN" : "SIGNUP"}
-          </Button>
         </form>
+        <Button clicked={this.switchAuthModeHandler} btnType="Danger">
+          SWITCH TO {this.state.isSignup ? "SIGNIN" : "SIGNUP"}
+        </Button>
       </div>
     );
   }
