@@ -16,7 +16,10 @@ const Sidedrawer = (props) => {
   return (
     <Aux>
       <Backdrop show={props.open} clicked={props.closeSidedrawer} />
-      <div className={attachedClasses.join(" ")}>
+      <div
+        className={attachedClasses.join(" ")}
+        onClick={props.closeSidedrawer}
+      >
         <div className={classes.WrapperToggleBtn}>
           <ToggleButton
             openSidedrawer={props.open}

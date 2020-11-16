@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../../store/actions/index";
 
+import { updateObject, checkValidity } from "../../../shared/utility";
+
 class ContactData extends Component {
   state = {
     orderForm: {
@@ -101,31 +103,22 @@ class ContactData extends Component {
     this.props.onOrderBurger(orders, this.props.token);
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-    return isValid;
-  }
-
   changeFormHandler = (event, inputIdentifier) => {
-    const orderFormCopy = { ...this.state.orderForm };
-    const formElementCopy = { ...orderFormCopy[inputIdentifier] };
-    formElementCopy.value = event.target.value;
-    formElementCopy.valid = this.checkValidity(
-      formElementCopy.value,
-      formElementCopy.validation
+    const formElementCopy = updateObject(
+      this.state.orderForm[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        ),
+        modified: true,
+      }
     );
-    formElementCopy.modified = true;
-    orderFormCopy[inputIdentifier] = formElementCopy;
+    const orderFormCopy = updateObject(this.state.orderForm, {
+      [inputIdentifier]: formElementCopy,
+    });
+
     let formIsValid = true;
     for (let inputIdentifier in orderFormCopy) {
       formIsValid = orderFormCopy[inputIdentifier].valid && formIsValid;
