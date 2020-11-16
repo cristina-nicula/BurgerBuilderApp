@@ -21,7 +21,7 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
 };
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     unitPrice: 0,
     totalExtraCharge: 0,
