@@ -5,6 +5,7 @@
 .idea/
 /.pnpg
 .pnp.js
+.env/
 
 # testing
 /coverage

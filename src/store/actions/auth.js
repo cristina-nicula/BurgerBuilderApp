@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+require("dotenv").config();
 
 export const authStart = () => {
   return {
@@ -47,11 +48,10 @@ export const auth = (email, password, isSignup) => {
       password: password,
       returnSecureToken: true,
     };
-    let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyByGHV2rNo1RMi0Si26ojtCIGuuGw2vIhU";
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
     if (!isSignup) {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyByGHV2rNo1RMi0Si26ojtCIGuuGw2vIhU";
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
     }
     axios
       .post(url, authData)
